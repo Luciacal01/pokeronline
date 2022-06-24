@@ -1,4 +1,4 @@
-package it.prova.pockeronline.model;
+package it.prova.pokeronline.model;
 
 import javax.persistence.Column;
 import javax.persistence.Entity;

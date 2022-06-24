@@ -1,8 +1,8 @@
-package it.prova.pockeronline.service;
+package it.prova.pokeronline.service;
 
 import java.util.List;
 
-import it.prova.pockeronline.model.Ruolo;
+import it.prova.pokeronline.model.Ruolo;
 
 public interface RuoloService {
 	public List<Ruolo> listAll();

@@ -1,4 +1,4 @@
-package it.prova.pockeronline.security;
+package it.prova.pokeronline.security;
 
 import java.io.IOException;
 import java.util.HashMap;

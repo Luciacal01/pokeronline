@@ -1,8 +1,8 @@
-package it.prova.pockeronline.service;
+package it.prova.pokeronline.service;
 
 import java.util.List;
 
-import it.prova.pockeronline.model.Utente;
+import it.prova.pokeronline.model.Utente;
 
 
 public interface UtenteService {

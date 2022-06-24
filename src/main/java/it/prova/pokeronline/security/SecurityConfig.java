@@ -1,4 +1,4 @@
-package it.prova.pockeronline.security;
+package it.prova.pokeronline.security;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.context.annotation.Bean;

@@ -1,4 +1,4 @@
-package it.prova.pockeronline.security;
+package it.prova.pokeronline.security;
 
 import java.util.Date;
 

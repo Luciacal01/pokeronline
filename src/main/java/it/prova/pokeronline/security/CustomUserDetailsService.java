@@ -1,4 +1,4 @@
-package it.prova.pockeronline.security;
+package it.prova.pokeronline.security;
 
 import java.util.Collection;
 
@@ -11,8 +11,8 @@ import org.springframework.security.core.userdetails.UsernameNotFoundException;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
-import it.prova.pockeronline.model.Utente;
-import it.prova.pockeronline.repository.UtenteRepository;
+import it.prova.pokeronline.model.Utente;
+import it.prova.pokeronline.repository.UtenteRepository;
 
 
 @Service

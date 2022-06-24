@@ -1,4 +1,4 @@
-package it.prova.pockeronline.security.auth;
+package it.prova.pokeronline.security.auth;
 
 import java.util.Collections;
 import java.util.Map;
@@ -12,8 +12,8 @@ import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
 
-import it.prova.pockeronline.security.JWTUtil;
-import it.prova.pockeronline.security.dto.UtenteAuthDTO;
+import it.prova.pokeronline.security.JWTUtil;
+import it.prova.pokeronline.security.dto.UtenteAuthDTO;
 
 @RestController
 @RequestMapping("/api/auth")

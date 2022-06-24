@@ -1,4 +1,4 @@
-package it.prova.pockeronline.model;
+package it.prova.pokeronline.model;
 
 import java.util.Date;
 import java.util.HashSet;
@@ -16,11 +16,10 @@ import javax.persistence.JoinTable;
 import javax.persistence.ManyToMany;
 import javax.persistence.Table;
 
-
 @Entity
 @Table(name = "utente")
 public class Utente {
-	
+
 	@Id
 	@GeneratedValue(strategy = GenerationType.IDENTITY)
 	@Column(name = "id")
@@ -47,6 +46,10 @@ public class Utente {
 	@JoinTable(name = "utente_ruolo", joinColumns = @JoinColumn(name = "utente_id", referencedColumnName = "ID"), inverseJoinColumns = @JoinColumn(name = "ruolo_id", referencedColumnName = "ID"))
 	private Set<Ruolo> ruoli = new HashSet<>(0);
 
+	public Utente() {
+		super();
+	}
+
 	public Utente(String username, String password, String nome, String cognome, Date dateRegistrazione,
 			StatoUtente stato, Integer esperienzaAccumulata, Integer creditoAccumulato) {
 		super();
@@ -70,6 +73,18 @@ public class Utente {
 		this.cognome = cognome;
 		this.dateRegistrazione = dateRegistrazione;
 		this.stato = stato;
+		this.esperienzaAccumulata = esperienzaAccumulata;
+		this.creditoAccumulato = creditoAccumulato;
+	}
+
+	public Utente(String username, String password, String nome, String cognome, Date dateRegistrazione,
+			Integer esperienzaAccumulata, Integer creditoAccumulato) {
+		super();
+		this.username = username;
+		this.password = password;
+		this.nome = nome;
+		this.cognome = cognome;
+		this.dateRegistrazione = dateRegistrazione;
 		this.esperienzaAccumulata = esperienzaAccumulata;
 		this.creditoAccumulato = creditoAccumulato;
 	}
@@ -153,7 +168,7 @@ public class Utente {
 	public void setRuoli(Set<Ruolo> ruoli) {
 		this.ruoli = ruoli;
 	}
-	
+
 	public boolean isAdmin() {
 		for (Ruolo ruoloItem : ruoli) {
 			if (ruoloItem.getCodice().equals(Ruolo.ROLE_ADMIN))
@@ -161,7 +176,7 @@ public class Utente {
 		}
 		return false;
 	}
-	
+
 	public boolean isPlayer() {
 		for (Ruolo ruoloItem : ruoli) {
 			if (ruoloItem.getCodice().equals(Ruolo.ROLE_PLAYER))
@@ -169,7 +184,7 @@ public class Utente {
 		}
 		return false;
 	}
-	
+
 	public boolean isSpecialPlayer() {
 		for (Ruolo ruoloItem : ruoli) {
 			if (ruoloItem.getCodice().equals(Ruolo.ROLE_SPECIAL_PLAYER))
@@ -185,6 +200,5 @@ public class Utente {
 	public boolean isDisabilitato() {
 		return this.stato != null && this.stato.equals(StatoUtente.DISABILITATO);
 	}
-	
-	
+
 }

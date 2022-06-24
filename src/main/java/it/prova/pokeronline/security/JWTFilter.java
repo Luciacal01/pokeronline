@@ -1,4 +1,4 @@
-package it.prova.pockeronline.security;
+package it.prova.pokeronline.security;
 
 import java.io.IOException;
 
@@ -27,7 +27,8 @@ public class JWTFilter extends OncePerRequestFilter{
 	private static final Logger LOGGER = LoggerFactory.getLogger(JWTFilter.class);
 
 	@Autowired
-	private CustomUserDetailsService userDetailsService;
+	private CustomUserDetailsService customUserDetailsService;
+	
 	@Autowired
 	private JWTUtil jwtUtil;
 
@@ -49,7 +50,7 @@ public class JWTFilter extends OncePerRequestFilter{
 					String username = jwtUtil.validateTokenAndRetrieveSubject(jwt);
 
 					// Fetch User Details
-					UserDetails userDetails = userDetailsService.loadUserByUsername(username);
+					UserDetails userDetails =customUserDetailsService.loadUserByUsername(username);
 
 					UsernamePasswordAuthenticationToken authentication = new UsernamePasswordAuthenticationToken(
 							userDetails, null, userDetails.getAuthorities());

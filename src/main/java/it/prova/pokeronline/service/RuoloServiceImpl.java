@@ -1,15 +1,23 @@
-package it.prova.pockeronline.service;
+package it.prova.pokeronline.service;
 
 import java.util.List;
 
-import it.prova.pockeronline.model.Ruolo;
+import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.stereotype.Service;
+import org.springframework.transaction.annotation.Transactional;
 
+import it.prova.pokeronline.model.Ruolo;
+import it.prova.pokeronline.repository.RuoloRepository;
+
+@Service
 public class RuoloServiceImpl implements RuoloService{
+	
+	@Autowired
+	private RuoloRepository ruoloRepository;
 
 	@Override
 	public List<Ruolo> listAll() {
-		// TODO Auto-generated method stub
-		return null;
+		return (List<Ruolo>) ruoloRepository.findAll();
 	}
 
 	@Override
@@ -25,8 +33,9 @@ public class RuoloServiceImpl implements RuoloService{
 	}
 
 	@Override
+	@Transactional
 	public void inserisciNuovo(Ruolo ruoloInstance) {
-		// TODO Auto-generated method stub
+		ruoloRepository.save(ruoloInstance);
 		
 	}
 
@@ -38,8 +47,7 @@ public class RuoloServiceImpl implements RuoloService{
 
 	@Override
 	public Ruolo cercaPerDescrizioneECodice(String descrizione, String codice) {
-		// TODO Auto-generated method stub
-		return null;
+		return ruoloRepository.findByDescrizioneAndCodice(descrizione, codice);
 	}
 
 }

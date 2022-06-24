@@ -1,4 +1,4 @@
-package it.prova.pockeronline.model;
+package it.prova.pokeronline.model;
 
 import java.util.Date;
 import java.util.HashSet;

@@ -1,4 +1,4 @@
-package it.prova.pockeronline.security.dto;
+package it.prova.pokeronline.security.dto;
 
 public class UtenteAuthDTO {
 	private String username;
