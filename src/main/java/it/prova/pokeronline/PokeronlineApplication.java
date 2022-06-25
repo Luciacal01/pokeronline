@@ -1,6 +1,9 @@
 package it.prova.pokeronline;
 
 import java.util.Date;
+import java.util.HashSet;
+import java.util.List;
+import java.util.Set;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.CommandLineRunner;
@@ -8,8 +11,10 @@ import org.springframework.boot.SpringApplication;
 import org.springframework.boot.autoconfigure.SpringBootApplication;
 
 import it.prova.pokeronline.model.Ruolo;
+import it.prova.pokeronline.model.Tavolo;
 import it.prova.pokeronline.model.Utente;
 import it.prova.pokeronline.service.RuoloService;
+import it.prova.pokeronline.service.TavoloService;
 import it.prova.pokeronline.service.UtenteService;
 
 
@@ -20,6 +25,8 @@ public class PokeronlineApplication implements CommandLineRunner {
 	private RuoloService ruoloServiceInstance;
 	@Autowired
 	private UtenteService utenteServiceInstance;
+	@Autowired
+	private TavoloService tavoloService;
 	
 	public static void main(String[] args) {
 		SpringApplication.run(PokeronlineApplication.class, args);
@@ -67,6 +74,17 @@ public class PokeronlineApplication implements CommandLineRunner {
 			utenteServiceInstance.inserisciNuovo(classicUser2);
 			// l'inserimento avviene come created ma io voglio attivarlo
 			utenteServiceInstance.changeUserAbilitation(classicUser2.getId());
+		}
+		
+		String denominazione="Tavolo 1";
+		Tavolo tavolo= tavoloService.findByDenominazione(denominazione);
+		
+		if(tavolo==null) {
+//			Set<Utente> giocatori= new HashSet<Utente>();
+//			giocatori.add(utenteServiceInstance.findByUsername("specialplayer"));
+//			giocatori.add(utenteServiceInstance.findByUsername("player"));
+			tavolo= new Tavolo(11, 1, denominazione, new Date(), utenteServiceInstance.findByUsername("admin"));
+			tavoloService.inserisciNuovo(tavolo);
 		}
 		
 	}

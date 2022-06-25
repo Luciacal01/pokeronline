@@ -15,6 +15,10 @@ import javax.persistence.ManyToMany;
 import javax.persistence.OneToMany;
 import javax.persistence.OneToOne;
 import javax.persistence.Table;
+import javax.validation.constraints.NotBlank;
+import javax.validation.constraints.NotNull;
+
+import it.prova.pokeronline.dto.UtenteDTO;
 
 
 @Entity
@@ -44,6 +48,12 @@ public class Tavolo {
 	@OneToOne(fetch = FetchType.LAZY)
 	@JoinColumn(name = "utentecreazione_id", referencedColumnName = "id", nullable = false)
 	private Utente utenteCreazione;
+	
+	
+	
+	public Tavolo() {
+		super();
+	}
 
 	public Tavolo(Integer esperienzaMinima, Integer cifraMinima, String denominazione, Date dataCreazione) {
 		super();
@@ -90,6 +100,19 @@ public class Tavolo {
 		this.denominazione = denominazione;
 		this.dataCreazione = dataCreazione;
 		this.giocatori = giocatori;
+		this.utenteCreazione = utenteCreazione;
+	}
+
+	
+
+	public Tavolo(Long id, Integer esperienzaMinima, Integer cifraMinima, String denominazione, Date dataCreazione,
+			Utente utenteCreazione) {
+		super();
+		this.id = id;
+		this.esperienzaMinima = esperienzaMinima;
+		this.cifraMinima = cifraMinima;
+		this.denominazione = denominazione;
+		this.dataCreazione = dataCreazione;
 		this.utenteCreazione = utenteCreazione;
 	}
 
