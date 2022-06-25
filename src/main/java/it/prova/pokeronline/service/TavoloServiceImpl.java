@@ -42,8 +42,7 @@ public class TavoloServiceImpl implements TavoloService {
 	@Override
 	@Transactional(readOnly = true)
 	public Tavolo caricaSingoloTavoloConUtenti(Long id) {
-		// TODO Auto-generated method stub
-		return null;
+		return tavoloRepository.findByIdConUtenti(id).orElse(null);
 	}
 
 	@Override
@@ -91,6 +90,11 @@ public class TavoloServiceImpl implements TavoloService {
 		Utente utenteCreazione=utenteRepository.findByUsername("admin").orElse(null);
 		buildTavoloModel.setUtenteCreazione(utenteCreazione);	
 		return tavoloRepository.save(buildTavoloModel);
+	}
+
+	@Override
+	public Tavolo caricaSingoloTavoloDiSpecialPlayerConUtenti(long id, Utente utenteInstance) {
+		return tavoloRepository.findByIdAndUtenteCreazione(id, utenteInstance).orElse(null);
 	}
 
 }

@@ -30,4 +30,6 @@ public interface TavoloService {
 
 	public Tavolo inserisciNuovoAdmin(Tavolo buildTavoloModel);
 
+	public Tavolo caricaSingoloTavoloDiSpecialPlayerConUtenti(long id, Utente utenteInstance);
+
 }
