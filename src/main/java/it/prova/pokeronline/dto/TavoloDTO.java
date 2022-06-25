@@ -59,6 +59,19 @@ public class TavoloDTO {
 		this.cifraMinima = cifraMinima;
 		this.dataCreazione = dataCreazione;
 	}
+	
+	public TavoloDTO(Long id, @NotBlank(message = "{denominazione.notblank}") String denominazione,
+			@NotNull(message = "{esperienzaMinima.notNull}") Integer esperienzaMinima,
+			@NotNull(message = "{cifraMinima.notNull}") Integer cifraMinima, Date dataCreazione,
+			@NotNull(message = "{utenteCreazione.notnull}") UtenteDTO utenteCreazione) {
+		super();
+		this.id = id;
+		this.denominazione = denominazione;
+		this.esperienzaMinima = esperienzaMinima;
+		this.cifraMinima = cifraMinima;
+		this.dataCreazione = dataCreazione;
+		this.utenteCreazione = utenteCreazione;
+	}
 
 	public Long getId() {
 		return id;
@@ -136,19 +149,7 @@ public class TavoloDTO {
 		return result;
 	}
 	
-	
-	public TavoloDTO(Long id, @NotBlank(message = "{denominazione.notblank}") String denominazione,
-			@NotNull(message = "{esperienzaMinima.notNull}") Integer esperienzaMinima,
-			@NotNull(message = "{cifraMinima.notNull}") Integer cifraMinima, Date dataCreazione,
-			@NotNull(message = "{utenteCreazione.notnull}") UtenteDTO utenteCreazione) {
-		super();
-		this.id = id;
-		this.denominazione = denominazione;
-		this.esperienzaMinima = esperienzaMinima;
-		this.cifraMinima = cifraMinima;
-		this.dataCreazione = dataCreazione;
-		this.utenteCreazione = utenteCreazione;
-	}
+
 
 	public static List<TavoloDTO> createTavoloDTOListFromModelList(List<Tavolo> modelListInput) {
 		return modelListInput.stream().map(tavoloEntity -> {

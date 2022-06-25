@@ -26,4 +26,8 @@ public interface TavoloService {
 
 	List<Tavolo> listAllTavoliCreatiDaSpecialPlayer(Utente utenteInstance);
 
+	public Tavolo inserisciNuovoConSpecialPlayer(Tavolo buildTavoloModel);
+
+	public Tavolo inserisciNuovoAdmin(Tavolo buildTavoloModel);
+
 }

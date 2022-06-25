@@ -13,7 +13,7 @@ import it.prova.pokeronline.model.Utente;
 public interface TavoloRepository extends CrudRepository<Tavolo, Long> {
 	Tavolo findByDenominazione(String denominazione);
 	
-	@EntityGraph(attributePaths = { "giocatori", "utentecreazione" })
+	@EntityGraph(attributePaths = { "giocatori", "utenteCreazione" })
 	List<Tavolo> findAllByUtenteCreazione_Id(Long idUtente);
 
 }

@@ -10,12 +10,15 @@ import org.springframework.transaction.annotation.Transactional;
 import it.prova.pokeronline.model.Tavolo;
 import it.prova.pokeronline.model.Utente;
 import it.prova.pokeronline.repository.TavoloRepository;
+import it.prova.pokeronline.repository.UtenteRepository;
 
 @Service
 public class TavoloServiceImpl implements TavoloService {
 	
 	@Autowired
 	private TavoloRepository tavoloRepository;
+	@Autowired
+	private UtenteRepository utenteRepository;
 
 	@Override
 	@Transactional(readOnly = true)
@@ -75,9 +78,19 @@ public class TavoloServiceImpl implements TavoloService {
 	public Tavolo findByDenominazione(String denominazione) {
 		return tavoloRepository.findByDenominazione(denominazione);
 	}
-	
-	
-	
-	
+
+	@Override
+	public Tavolo inserisciNuovoConSpecialPlayer(Tavolo buildTavoloModel) {
+		Utente utenteCreazione=utenteRepository.findByUsername("specialplayer").orElse(null);
+		buildTavoloModel.setUtenteCreazione(utenteCreazione);
+		return tavoloRepository.save(buildTavoloModel);
+	}
+
+	@Override
+	public Tavolo inserisciNuovoAdmin(Tavolo buildTavoloModel) {
+		Utente utenteCreazione=utenteRepository.findByUsername("admin").orElse(null);
+		buildTavoloModel.setUtenteCreazione(utenteCreazione);	
+		return tavoloRepository.save(buildTavoloModel);
+	}
 
 }
