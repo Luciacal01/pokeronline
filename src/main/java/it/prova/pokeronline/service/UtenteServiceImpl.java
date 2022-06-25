@@ -22,62 +22,79 @@ public class UtenteServiceImpl implements UtenteService {
 	private PasswordEncoder passwordEncoder;
 
 	@Override
+	@Transactional(readOnly = true)
 	public List<Utente> listAllUtenti() {
 		return (List<Utente>) utenteRepository.findAll();
 	}
 
 	@Override
+	@Transactional(readOnly = true)
 	public Utente caricaSingoloUtente(Long id) {
 		return utenteRepository.findById(id).orElse(null);
 	}
 
 	@Override
+	@Transactional(readOnly = true)
 	public Utente caricaSingoloUtenteConRuoli(Long id) {
-		// TODO Auto-generated method stub
-		return null;
+		return utenteRepository.findByIdConRuoli(id).orElse(null);
 	}
 
 	@Override
-	public void aggiorna(Utente utenteInstance) {
-		// TODO Auto-generated method stub
+	@Transactional
+	public Utente aggiorna(Utente utenteInstance) {
+		Utente utenteReloaded = utenteRepository.findById(utenteInstance.getId()).orElse(null);
+		if (utenteReloaded == null)
+			throw new RuntimeException("Elemento non trovato");
+		utenteReloaded.setNome(utenteInstance.getNome());
+		utenteReloaded.setCognome(utenteInstance.getCognome());
+		utenteReloaded.setUsername(utenteInstance.getUsername());
+		utenteReloaded.setDateRegistrazione(utenteInstance.getDateRegistrazione());
+		utenteReloaded.setEsperienzaAccumulata(utenteInstance.getEsperienzaAccumulata());
+		utenteReloaded.setCreditoAccumulato(utenteInstance.getCreditoAccumulato());
+		utenteReloaded.setRuoli(utenteInstance.getRuoli());
+		return utenteRepository.save(utenteReloaded);
 
 	}
 
 	@Override
 	@Transactional
-	public void inserisciNuovo(Utente utenteInstance) {
+	public Utente inserisciNuovo(Utente utenteInstance) {
+		utenteInstance.setEsperienzaAccumulata(0);
+		utenteInstance.setCreditoAccumulato(0);
 		utenteInstance.setStato(StatoUtente.CREATO);
 		utenteInstance.setPassword(passwordEncoder.encode(utenteInstance.getPassword()));
 		utenteInstance.setDateRegistrazione(new Date());
-		utenteRepository.save(utenteInstance);
+		return utenteRepository.save(utenteInstance);
 
 	}
 
 	@Override
+	@Transactional
 	public void rimuovi(Utente utenteInstance) {
-		// TODO Auto-generated method stub
+		utenteRepository.delete(utenteInstance);
 
 	}
 
 	@Override
+	@Transactional(readOnly = true)
 	public List<Utente> findByExample(Utente example) {
-		// TODO Auto-generated method stub
-		return null;
+		return utenteRepository.findByExample(example);
 	}
 
 	@Override
+	@Transactional(readOnly = true)
 	public Utente findByUsernameAndPassword(String username, String password) {
-		// TODO Auto-generated method stub
-		return null;
+		return utenteRepository.findByUsernameAndPassword(username, password);
 	}
 
 	@Override
+	@Transactional(readOnly = true)
 	public Utente eseguiAccesso(String username, String password) {
-		// TODO Auto-generated method stub
-		return null;
+		return utenteRepository.findByUsernameAndPasswordAndStato(username, password, StatoUtente.ATTIVO);
 	}
 
 	@Override
+	@Transactional
 	public void changeUserAbilitation(Long utenteInstanceId) {
 		Utente utenteInstance = caricaSingoloUtente(utenteInstanceId);
 		if (utenteInstance == null)
@@ -89,12 +106,24 @@ public class UtenteServiceImpl implements UtenteService {
 			utenteInstance.setStato(StatoUtente.DISABILITATO);
 		else if (utenteInstance.getStato().equals(StatoUtente.DISABILITATO))
 			utenteInstance.setStato(StatoUtente.ATTIVO);
-
+		
+		//utenteRepository.save(utenteInstance);
 	}
 
 	@Override
+	@Transactional(readOnly = true)
 	public Utente findByUsername(String username) {
 		return utenteRepository.findByUsername(username).orElse(null);
 	}
+
+	@Override
+	@Transactional
+	public Utente DisabilitaUtente(Utente utenteInstance) {
+		Utente utenteDaDisabilitare = utenteRepository.findById(utenteInstance.getId()).orElse(null);
+		utenteDaDisabilitare.setStato(StatoUtente.DISABILITATO);
+		return utenteRepository.save(utenteDaDisabilitare);
+	}
+	
+	
 
 }

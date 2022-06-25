@@ -27,9 +27,6 @@ public class AuthController {
 	@PostMapping("/login")
 	public Map<String, Object> loginHandler(@RequestBody UtenteAuthDTO body) {
 		try {
-			// Creating the Authentication Token which will contain the credentials for
-			// authenticating
-			// This token is used as input to the authentication process
 			UsernamePasswordAuthenticationToken authInputToken = new UsernamePasswordAuthenticationToken(
 					body.getUsername(), body.getPassword());
 

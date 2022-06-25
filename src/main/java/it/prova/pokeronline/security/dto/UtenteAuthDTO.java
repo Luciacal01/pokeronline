@@ -1,6 +1,7 @@
 package it.prova.pokeronline.security.dto;
 
 public class UtenteAuthDTO {
+
 	private String username;
 	private String password;
 

@@ -89,6 +89,17 @@ public class Utente {
 		this.creditoAccumulato = creditoAccumulato;
 	}
 
+	
+
+	public Utente(String username, String password, String nome, String cognome, Date dateRegistrazione) {
+		super();
+		this.username = username;
+		this.password = password;
+		this.nome = nome;
+		this.cognome = cognome;
+		this.dateRegistrazione = dateRegistrazione;
+	}
+
 	public Long getId() {
 		return id;
 	}

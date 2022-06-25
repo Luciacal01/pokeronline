@@ -22,8 +22,7 @@ public class RuoloServiceImpl implements RuoloService{
 
 	@Override
 	public Ruolo caricaSingoloElemento(Long id) {
-		// TODO Auto-generated method stub
-		return null;
+		return ruoloRepository.findById(id).orElse(null);
 	}
 
 	@Override

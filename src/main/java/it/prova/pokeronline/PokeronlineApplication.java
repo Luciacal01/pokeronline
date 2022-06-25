@@ -35,8 +35,8 @@ public class PokeronlineApplication implements CommandLineRunner {
 			ruoloServiceInstance.inserisciNuovo(new Ruolo("Player", Ruolo.ROLE_PLAYER));
 		}
 		
-		if (ruoloServiceInstance.cercaPerDescrizioneECodice("Special Player", Ruolo.ROLE_SPECIAL_PLAYER) == null) {
-			ruoloServiceInstance.inserisciNuovo(new Ruolo("Special Player", Ruolo.ROLE_SPECIAL_PLAYER));
+		if (ruoloServiceInstance.cercaPerDescrizioneECodice("SpecialPlayer", Ruolo.ROLE_SPECIAL_PLAYER) == null) {
+			ruoloServiceInstance.inserisciNuovo(new Ruolo("SpecialPlayer", Ruolo.ROLE_SPECIAL_PLAYER));
 		}
 
 		// a differenza degli altri progetti cerco solo per username perche' se vado
@@ -44,7 +44,7 @@ public class PokeronlineApplication implements CommandLineRunner {
 		// password non lo
 		// faccio qui perche gia lo fa il service di utente, durante inserisciNuovo
 		if (utenteServiceInstance.findByUsername("admin") == null) {
-			Utente admin = new Utente("admin", "admin", "Mario", "Rossi", new Date(), 0, 0);
+			Utente admin = new Utente("admin", "admin", "Giovanni", "Rossi", new Date());
 			admin.getRuoli().add(ruoloServiceInstance.cercaPerDescrizioneECodice("Administrator", Ruolo.ROLE_ADMIN));
 			utenteServiceInstance.inserisciNuovo(admin);
 			// l'inserimento avviene come created ma io voglio attivarlo
@@ -52,7 +52,7 @@ public class PokeronlineApplication implements CommandLineRunner {
 		}
 
 		if (utenteServiceInstance.findByUsername("player") == null) {
-			Utente classicUser = new Utente("player", "player", "Antonio", "Verdi", new Date(),0,0);
+			Utente classicUser = new Utente("player", "player", "Antonio", "Verdi", new Date());
 			classicUser.getRuoli()
 					.add(ruoloServiceInstance.cercaPerDescrizioneECodice("Player", Ruolo.ROLE_PLAYER));
 			utenteServiceInstance.inserisciNuovo(classicUser);
@@ -60,10 +60,10 @@ public class PokeronlineApplication implements CommandLineRunner {
 			utenteServiceInstance.changeUserAbilitation(classicUser.getId());
 		}
 
-		if (utenteServiceInstance.findByUsername("special player") == null) {
-			Utente classicUser2 = new Utente("specialplayer", "specialplayer", "Giuseppe", "Verdiii", new Date(),0,0);
+		if (utenteServiceInstance.findByUsername("specialplayer") == null) {
+			Utente classicUser2 = new Utente("specialplayer", "specialplayer", "Giuseppe", "Verdiii", new Date());
 			classicUser2.getRuoli()
-					.add(ruoloServiceInstance.cercaPerDescrizioneECodice("Special Player", Ruolo.ROLE_SPECIAL_PLAYER));
+					.add(ruoloServiceInstance.cercaPerDescrizioneECodice("SpecialPlayer", Ruolo.ROLE_SPECIAL_PLAYER));
 			utenteServiceInstance.inserisciNuovo(classicUser2);
 			// l'inserimento avviene come created ma io voglio attivarlo
 			utenteServiceInstance.changeUserAbilitation(classicUser2.getId());

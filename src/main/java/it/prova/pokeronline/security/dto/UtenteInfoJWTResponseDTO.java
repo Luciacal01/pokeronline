@@ -3,6 +3,7 @@ package it.prova.pokeronline.security.dto;
 import java.util.List;
 
 public class UtenteInfoJWTResponseDTO {
+
 	private String nome;
 	private String cognome;
 	private String type = "Bearer";
@@ -51,5 +52,4 @@ public class UtenteInfoJWTResponseDTO {
 	public void setCognome(String cognome) {
 		this.cognome = cognome;
 	}
-
 }

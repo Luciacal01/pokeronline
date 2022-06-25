@@ -24,6 +24,8 @@ public class Ruolo {
 	@Column(name = "codice")
 	private String codice;
 	
+	
+	
 	public Ruolo() {
 		super();
 	}
@@ -39,6 +41,11 @@ public class Ruolo {
 		this.id = id;
 		this.descrizione = descrizione;
 		this.codice = codice;
+	}
+	
+	public Ruolo(Long id) {
+		super();
+		this.id=id;
 	}
 
 	public Long getId() {

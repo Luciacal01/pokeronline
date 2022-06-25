@@ -3,6 +3,7 @@ package it.prova.pokeronline.security.dto;
 import java.util.List;
 
 public class UtenteAuthJWTResponseDTO {
+
 	private String token;
 	private String type = "Bearer";
 	private String username;
