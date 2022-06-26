@@ -26,7 +26,7 @@ public class PlayManagment {
 	@Autowired
 	private TavoloService tavoloService;
 	
-	@GetMapping("compraCredito/{valoreDaSommare}")
+	@GetMapping("/compraCredito/{valoreDaSommare}")
 	public UtenteDTO compraCredito(@PathVariable(value = "valoreDaSommare", required = true) Integer valoreDaSommare){
 		
 		Utente giocatoreAcquirente = utenteService
@@ -39,7 +39,7 @@ public class PlayManagment {
 		
 	} 
 	
-	@GetMapping("dammiIlLastGame")
+	@GetMapping("/dammiIlLastGame")
 	public boolean dammiIlLastGame() {
 		List<TavoloDTO> listaTavoliUtente=TavoloDTO
 				.createTavoloDTOListFromModelList(tavoloService.findTavoloByGiocatoreContains(utenteService
@@ -49,6 +49,12 @@ public class PlayManagment {
 			return false;
 		
 		return true;
+	}
+	
+	@GetMapping("/abbandonaPartita/{tavoloId}")
+	public void abbandonaPartita(@PathVariable(value = "tavoloId", required = true) Long tavoloId) {
+		Utente giocatore= utenteService.findByUsername(SecurityContextHolder.getContext().getAuthentication().getName());
+		tavoloService.abbandonaPartita(tavoloId, giocatore);
 	}
 	
 }

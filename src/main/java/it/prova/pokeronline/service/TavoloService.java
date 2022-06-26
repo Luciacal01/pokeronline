@@ -36,4 +36,6 @@ public interface TavoloService {
 
 	public List<Tavolo> findTavoloByGiocatoreContains(Utente findByUsername);
 
+	public void abbandonaPartita(Long tavoloId, Utente giocatore);
+
 }

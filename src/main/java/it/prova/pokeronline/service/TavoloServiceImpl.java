@@ -86,6 +86,7 @@ public class TavoloServiceImpl implements TavoloService {
 	}
 
 	@Override
+	@Transactional
 	public Tavolo inserisciNuovoConSpecialPlayer(Tavolo buildTavoloModel) {
 		Utente utenteCreazione=utenteRepository.findByUsername("specialplayer").orElse(null);
 		buildTavoloModel.setUtenteCreazione(utenteCreazione);
@@ -93,6 +94,7 @@ public class TavoloServiceImpl implements TavoloService {
 	}
 
 	@Override
+	@Transactional
 	public Tavolo inserisciNuovoAdmin(Tavolo buildTavoloModel) {
 		Utente utenteCreazione=utenteRepository.findByUsername("admin").orElse(null);
 		buildTavoloModel.setUtenteCreazione(utenteCreazione);	
@@ -100,13 +102,31 @@ public class TavoloServiceImpl implements TavoloService {
 	}
 
 	@Override
+	@Transactional(readOnly = true)
 	public Tavolo caricaSingoloTavoloDiSpecialPlayerConUtenti(long id, Utente utenteInstance) {
 		return tavoloRepository.findByIdAndUtenteCreazione(id, utenteInstance).orElse(null);
 	}
 
 	@Override
+	@Transactional(readOnly = true)
 	public List<Tavolo> findTavoloByGiocatoreContains(Utente utente) {
 		return tavoloRepository.findTavoloGiocatorePresente(utente);
+	}
+
+	@Override
+	@Transactional
+	public void abbandonaPartita(Long tavoloId, Utente giocatore) {
+		Tavolo tavolo = tavoloRepository.findById(tavoloId).orElse(null);
+		
+		if(tavolo== null) {
+			return;
+		}
+		
+		tavolo.getGiocatori().remove(giocatore);
+		giocatore.setEsperienzaAccumulata(giocatore.getEsperienzaAccumulata()+1);
+		utenteRepository.save(giocatore);
+		tavoloRepository.save(tavolo);
+		
 	}
 
 }
