@@ -123,6 +123,13 @@ public class UtenteServiceImpl implements UtenteService {
 		utenteDaDisabilitare.setStato(StatoUtente.DISABILITATO);
 		return utenteRepository.save(utenteDaDisabilitare);
 	}
+
+	@Override
+	public void aggiornaCreditoUtente(Utente giocatoreAcquirente, Integer creditoDaAggiungere) {
+		Integer CreditoFinale= giocatoreAcquirente.getCreditoAccumulato()+ creditoDaAggiungere;
+		giocatoreAcquirente.setCreditoAccumulato(CreditoFinale);
+		utenteRepository.save(giocatoreAcquirente);
+	}
 	
 	
 

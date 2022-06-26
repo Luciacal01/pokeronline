@@ -31,4 +31,6 @@ public interface UtenteService {
 	
 	public Utente DisabilitaUtente(Utente utenteInstance);
 
+	public void aggiornaCreditoUtente(Utente giocatoreAcquirente, Integer creditoDaAggiungere);
+
 }

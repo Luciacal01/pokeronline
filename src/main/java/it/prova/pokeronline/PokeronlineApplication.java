@@ -87,6 +87,18 @@ public class PokeronlineApplication implements CommandLineRunner {
 			tavoloService.inserisciNuovo(tavolo);
 		}
 		
+		String denominazione2="Tavolo 2";
+		Tavolo tavolo2= tavoloService.findByDenominazione(denominazione2);
+		
+		if(tavolo2==null) {
+			tavolo2= new Tavolo(11, 1, denominazione, new Date(), utenteServiceInstance.findByUsername("admin"));
+			Set<Utente> giocatori= new HashSet<Utente>();
+			giocatori.add(utenteServiceInstance.findByUsername("specialplayer"));
+			giocatori.add(utenteServiceInstance.findByUsername("player"));
+			tavolo2.setGiocatori(giocatori);
+			tavoloService.inserisciNuovo(tavolo2);
+		}
+		
 	}
 
 }
