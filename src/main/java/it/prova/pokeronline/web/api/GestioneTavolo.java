@@ -89,16 +89,16 @@ public class GestioneTavolo {
 			tavoloInput.setId(id);
 			Tavolo tavoloAggiornato = tavoloServiceInstance.aggiorna(tavoloInput.buildTavoloModel(true));
 			return TavoloDTO.buildTavoloDTOFromModel(tavoloAggiornato);
-		}else {
-			if (tavolo == null)
-				throw new TavoloNotFoundException("Tavolo not found con id: " + id);
-			
-			if(tavoloInput.getUtenteCreazione().getId()!= tavolo.getUtenteCreazione().getId()) throw new PermessoNegatoPerModificaAlTavoloException("Non hai l'autorizzazione per modificare il tavolo");
-	
-			tavoloInput.setId(id);
-			Tavolo tavoloAggiornato = tavoloServiceInstance.aggiorna(tavoloInput.buildTavoloModel(true));
-			return TavoloDTO.buildTavoloDTOFromModel(tavoloAggiornato);
 		}
+		if (tavolo == null)
+			throw new TavoloNotFoundException("Tavolo not found con id: " + id);
+			
+		if(tavoloInput.getUtenteCreazione().getId()!= tavolo.getUtenteCreazione().getId()) throw new PermessoNegatoPerModificaAlTavoloException("Non hai l'autorizzazione per modificare il tavolo");
+	
+		tavoloInput.setId(id);
+		Tavolo tavoloAggiornato = tavoloServiceInstance.aggiorna(tavoloInput.buildTavoloModel(true));
+		return TavoloDTO.buildTavoloDTOFromModel(tavoloAggiornato);
+		
 	}
 	
 	@DeleteMapping("/{id}")

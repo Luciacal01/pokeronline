@@ -41,4 +41,8 @@ public interface TavoloService {
 
 	public List<Tavolo> ricercaTavoli(Integer esperienzaAccumulata);
 
+	public Tavolo aggiungiGiocatore(Tavolo tavolo, Utente giocatore);
+
+	public void giocaPartita(Utente giocatore, Tavolo tavolo);
+
 }

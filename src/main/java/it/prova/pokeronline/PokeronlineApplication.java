@@ -91,7 +91,7 @@ public class PokeronlineApplication implements CommandLineRunner {
 		Tavolo tavolo2= tavoloService.findByDenominazione(denominazione2);
 		
 		if(tavolo2==null) {
-			tavolo2= new Tavolo(11, 1, denominazione, new Date(), utenteServiceInstance.findByUsername("admin"));
+			tavolo2= new Tavolo(0, 10, denominazione, new Date(), utenteServiceInstance.findByUsername("admin"));
 			Set<Utente> giocatori= new HashSet<Utente>();
 			giocatori.add(utenteServiceInstance.findByUsername("specialplayer"));
 			giocatori.add(utenteServiceInstance.findByUsername("player"));

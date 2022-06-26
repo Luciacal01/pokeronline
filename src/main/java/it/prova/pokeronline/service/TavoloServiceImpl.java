@@ -11,6 +11,7 @@ import it.prova.pokeronline.model.Tavolo;
 import it.prova.pokeronline.model.Utente;
 import it.prova.pokeronline.repository.TavoloRepository;
 import it.prova.pokeronline.repository.UtenteRepository;
+import it.prova.pokeronline.web.api.exception.CreditoInsufficienteException;
 import it.prova.pokeronline.web.api.exception.TavoloAncoraAttivoException;
 import net.bytebuddy.asm.Advice.Return;
 
@@ -43,7 +44,7 @@ public class TavoloServiceImpl implements TavoloService {
 	@Override
 	@Transactional(readOnly = true)
 	public Tavolo caricaSingoloTavoloConUtenti(Long id) {
-		return tavoloRepository.findByIdEager(id);
+		return tavoloRepository.findByIdConUtenti(id).orElse(null);
 	}
 
 	@Override
@@ -133,5 +134,35 @@ public class TavoloServiceImpl implements TavoloService {
 	public List<Tavolo> ricercaTavoli(Integer esperienzaAccumulata) {
 		return tavoloRepository.findAllByEsperienzaMinimaIsLessThanEqual(esperienzaAccumulata);
 	}
+
+	@Override
+	@Transactional
+	public Tavolo aggiungiGiocatore(Tavolo tavolo, Utente giocatore) {
+		tavolo.getGiocatori().add(giocatore);
+		return tavoloRepository.save(tavolo);
+	}
+
+	@Override
+	public void giocaPartita(Utente giocatore, Tavolo tavolo) {
+		int credito=giocatore.getCreditoAccumulato();
+		if(credito<=0) {
+			giocatore.setCreditoAccumulato(0);
+			utenteRepository.save(giocatore);
+			throw new CreditoInsufficienteException("Il suo credito è esaurito, ricaricare o abbandonare la partita");
+		}
+		
+		double segno= Math.random();
+		int risultato= (int) Math.random()*1000;
+		double totale= segno*risultato;
+		if(segno<0.5) {
+			credito-=totale;
+		}else {
+			credito+=totale;
+		}
+		
+		giocatore.setCreditoAccumulato(credito);
+		utenteRepository.save(giocatore);
+	}
+
 
 }

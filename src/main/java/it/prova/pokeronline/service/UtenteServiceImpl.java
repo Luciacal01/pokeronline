@@ -59,7 +59,7 @@ public class UtenteServiceImpl implements UtenteService {
 	@Override
 	@Transactional
 	public Utente inserisciNuovo(Utente utenteInstance) {
-		utenteInstance.setEsperienzaAccumulata(0);
+		utenteInstance.setEsperienzaAccumulata(2);
 		utenteInstance.setCreditoAccumulato(0);
 		utenteInstance.setStato(StatoUtente.CREATO);
 		utenteInstance.setPassword(passwordEncoder.encode(utenteInstance.getPassword()));
@@ -125,6 +125,7 @@ public class UtenteServiceImpl implements UtenteService {
 	}
 
 	@Override
+	@Transactional
 	public void aggiornaCreditoUtente(Utente giocatoreAcquirente, Integer creditoDaAggiungere) {
 		Integer CreditoFinale= giocatoreAcquirente.getCreditoAccumulato()+ creditoDaAggiungere;
 		giocatoreAcquirente.setCreditoAccumulato(CreditoFinale);

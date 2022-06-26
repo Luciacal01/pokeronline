@@ -22,7 +22,7 @@ public interface TavoloRepository extends CrudRepository<Tavolo, Long>, CustomTa
 
 	Optional<Tavolo> findByIdAndUtenteCreazione(long id, Utente utenteInstance);
 	
-	@Query("select t from Tavolo t join fetch t.giocatori join fetch t.utenteCreazione where t.id = ?1")
+	@Query("from Tavolo t join fetch t.giocatori join fetch t.utenteCreazione where t.id = ?1")
 	Tavolo findByIdEager(Long id);
 	
 	@Query("from Tavolo t join fetch t.giocatori g where g=:utente")

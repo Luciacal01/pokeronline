@@ -15,6 +15,9 @@ import it.prova.pokeronline.model.Tavolo;
 import it.prova.pokeronline.model.Utente;
 import it.prova.pokeronline.service.TavoloService;
 import it.prova.pokeronline.service.UtenteService;
+import it.prova.pokeronline.web.api.exception.CreditoInsufficienteException;
+import it.prova.pokeronline.web.api.exception.NonPuoiGiocareAQuestoTavoloException;
+import it.prova.pokeronline.web.api.exception.TavoloNotFoundException;
 import it.prova.pokeronline.web.api.exception.UtenteNotFoundException;
 
 @RestController
@@ -64,6 +67,27 @@ public class PlayManagment {
 				.getEsperienzaAccumulata());
 		return TavoloDTO.createTavoloDTOListFromModelList(TavoliConEsperienzaMinimaMinoreDiQuellaAccumulata);
 		
+	}
+	
+	@GetMapping("/giocaPartitaAQuelTavolo/{tavoloId}")
+	public int giocaPartita(@PathVariable(value = "tavoloId", required = true) Long tavoloId) {
+		Utente giocatore = utenteService
+				.findByUsername(SecurityContextHolder.getContext().getAuthentication().getName());
+		Tavolo tavolo= tavoloService.caricaSingoloTavoloConUtenti(tavoloId);
+		
+		if(tavolo==null) throw new TavoloNotFoundException("Il tavolo non è presente, inserirne uno diverso");
+		
+		if(giocatore.getEsperienzaAccumulata()<= tavolo.getEsperienzaMinima()) throw new NonPuoiGiocareAQuestoTavoloException("L'esperienza richiesta è minore di quella accumulata, gioca ancora");
+		
+		if(giocatore.getCreditoAccumulato()<= tavolo.getCifraMinima()) throw new CreditoInsufficienteException("Non hai abbastanza denaro per giocare!!");
+		
+		if(!tavolo.getGiocatori().contains(giocatore)) {
+			tavoloService.aggiungiGiocatore(tavolo, giocatore);
+		}
+		
+		tavoloService.giocaPartita(giocatore,tavolo);
+		
+		return giocatore.getCreditoAccumulato();
 	}
 	
 }
