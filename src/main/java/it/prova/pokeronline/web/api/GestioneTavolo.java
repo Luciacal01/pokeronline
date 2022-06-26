@@ -41,9 +41,8 @@ public class GestioneTavolo {
 	@GetMapping
 	public List<TavoloDTO> getAll() {
 		if (SecurityContextHolder.getContext().getAuthentication().getAuthorities().stream()
-				.anyMatch(r -> r.getAuthority().equals("ADMIN"))) {
-			List<TavoloDTO> list = TavoloDTO.createTavoloDTOListFromModelList(tavoloServiceInstance.listAllTavoli());
-			return list;
+				.anyMatch(r -> r.getAuthority().equals("ROLE_ADMIN"))) {
+			return  TavoloDTO.createTavoloDTOListFromModelList(tavoloServiceInstance.listAllTavoli());
 		}
 		return TavoloDTO.createTavoloDTOListFromModelList(tavoloServiceInstance.listAllTavoliCreatiDaSpecialPlayer(utenteServiceInstance.findByUsername(SecurityContextHolder.getContext().getAuthentication().getName())));
 	}
@@ -53,7 +52,7 @@ public class GestioneTavolo {
 		// se mi viene inviato un id jpa lo interpreta come update ed a me (producer)
 		// non sta bene
 		if (SecurityContextHolder.getContext().getAuthentication().getAuthorities().stream()
-				.anyMatch(r -> r.getAuthority().equals("ADMIN"))) {
+				.anyMatch(r -> r.getAuthority().equals("ROLE_ADMIN"))) {
 			if (tavoloInput.getId() != null)
 				throw new IdNotNullForInsertException("Non è ammesso fornire un id per la creazione");
 	
@@ -68,7 +67,7 @@ public class GestioneTavolo {
 	@GetMapping("/{id}")
 	public TavoloDTO findById(@PathVariable(value = "id", required = true) long id) {
 		if (SecurityContextHolder.getContext().getAuthentication().getAuthorities().stream()
-				.anyMatch(r -> r.getAuthority().equals("admin"))) {
+				.anyMatch(r -> r.getAuthority().equals("ROLE_ADMIN"))) {
 			Tavolo tavoloAdmin = tavoloServiceInstance.caricaSingoloTavoloConUtenti(id);
 			if (tavoloAdmin == null)
 				throw new TavoloNotFoundException("Tavolo not found con id: " + id);
@@ -81,16 +80,25 @@ public class GestioneTavolo {
 	
 	@PutMapping("/{id}")
 	public TavoloDTO update(@Valid @RequestBody TavoloDTO tavoloInput, @PathVariable(required = true) Long id) {
-		Tavolo tavolo = tavoloServiceInstance.caricaSingoloTavolo(id);
-
-		if (tavolo == null)
-			throw new TavoloNotFoundException("Tavolo not found con id: " + id);
-		
-		if(tavoloInput.getUtenteCreazione().getId()!= tavolo.getId()) throw new PermessoNegatoPerModificaAlTavoloException("Non hai l'autorizzazione per modificare il tavolo");
-
-		tavoloInput.setId(id);
-		Tavolo tavoloAggiornato = tavoloServiceInstance.aggiorna(tavoloInput.buildTavoloModel(true));
-		return TavoloDTO.buildTavoloDTOFromModel(tavoloAggiornato);
+		Tavolo tavolo = tavoloServiceInstance.caricaSingoloTavoloConUtenti(id);
+		if (SecurityContextHolder.getContext().getAuthentication().getAuthorities().stream()
+				.anyMatch(r -> r.getAuthority().equals("ROLE_ADMIN"))) {
+			if (tavolo == null)
+				throw new TavoloNotFoundException("Tavolo not found con id: " + id);
+	
+			tavoloInput.setId(id);
+			Tavolo tavoloAggiornato = tavoloServiceInstance.aggiorna(tavoloInput.buildTavoloModel(true));
+			return TavoloDTO.buildTavoloDTOFromModel(tavoloAggiornato);
+		}else {
+			if (tavolo == null)
+				throw new TavoloNotFoundException("Tavolo not found con id: " + id);
+			
+			if(tavoloInput.getUtenteCreazione().getId()!= tavolo.getUtenteCreazione().getId()) throw new PermessoNegatoPerModificaAlTavoloException("Non hai l'autorizzazione per modificare il tavolo");
+	
+			tavoloInput.setId(id);
+			Tavolo tavoloAggiornato = tavoloServiceInstance.aggiorna(tavoloInput.buildTavoloModel(true));
+			return TavoloDTO.buildTavoloDTOFromModel(tavoloAggiornato);
+		}
 	}
 	
 	@DeleteMapping("/{id}")
@@ -104,7 +112,19 @@ public class GestioneTavolo {
 		tavoloServiceInstance.rimuovi(tavoloInstance);
 	}
 	
-	
+	@PostMapping("/search")
+	public List<TavoloDTO> Search(@RequestBody TavoloDTO exampleDTO) {
+
+		if (SecurityContextHolder.getContext().getAuthentication().getAuthorities().stream()
+				.anyMatch(r -> r.getAuthority().equals("ROLE_ADMIN"))) {
+			return TavoloDTO.createTavoloDTOListFromModelList(
+					tavoloServiceInstance.findByExampleAdmin(exampleDTO.buildTavoloModel(true)));
+
+		}
+		return TavoloDTO.createTavoloDTOListFromModelList(tavoloServiceInstance.findByExample(exampleDTO.buildTavoloModel(true),
+				utenteServiceInstance.findByUsername(SecurityContextHolder.getContext().getAuthentication().getName())));
+
+	}
 	
 	
 

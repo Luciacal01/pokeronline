@@ -11,7 +11,7 @@ import it.prova.pokeronline.model.Tavolo;
 import it.prova.pokeronline.model.Utente;
 
 
-public interface TavoloRepository extends CrudRepository<Tavolo, Long> {
+public interface TavoloRepository extends CrudRepository<Tavolo, Long>, CustomTavoloRepository {
 	Tavolo findByDenominazione(String denominazione);
 	
 	@EntityGraph(attributePaths = { "giocatori", "utenteCreazione" })

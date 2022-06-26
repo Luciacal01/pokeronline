@@ -19,8 +19,6 @@ public interface TavoloService {
 	public Tavolo inserisciNuovo(Tavolo tavoloInstance);
 
 	public void rimuovi(Tavolo tavoloInstance);
-
-	public List<Tavolo> findByExample(Tavolo example);
 	
 	public Tavolo findByDenominazione(String denominazione);
 
@@ -31,5 +29,9 @@ public interface TavoloService {
 	public Tavolo inserisciNuovoAdmin(Tavolo buildTavoloModel);
 
 	public Tavolo caricaSingoloTavoloDiSpecialPlayerConUtenti(long id, Utente utenteInstance);
+
+	public List<Tavolo> findByExample(Tavolo example, Utente utente);
+	
+	public List<Tavolo> findByExampleAdmin(Tavolo example);
 
 }

@@ -43,7 +43,7 @@ public class TavoloServiceImpl implements TavoloService {
 	@Override
 	@Transactional(readOnly = true)
 	public Tavolo caricaSingoloTavoloConUtenti(Long id) {
-		return tavoloRepository.findByIdConUtenti(id).orElse(null);
+		return tavoloRepository.findByIdEager(id);
 	}
 
 	@Override
@@ -69,13 +69,16 @@ public class TavoloServiceImpl implements TavoloService {
 
 	}
 
-	@Override
 	@Transactional(readOnly = true)
-	public List<Tavolo> findByExample(Tavolo example) {
-		// TODO Auto-generated method stub
-		return null;
+	public List<Tavolo> findByExample(Tavolo example, Utente utente) {
+		return tavoloRepository.findByExample(example, utente);
 	}
-
+	
+	@Transactional(readOnly = true)
+	public List<Tavolo> findByExampleAdmin(Tavolo example) {
+		return tavoloRepository.findByExampleAdmin(example);
+	}
+	
 	@Override
 	@Transactional(readOnly = true)
 	public Tavolo findByDenominazione(String denominazione) {
