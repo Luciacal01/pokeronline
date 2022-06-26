@@ -58,5 +58,29 @@ public class CustomExceptionHandler extends ResponseEntityExceptionHandler {
 
 		return new ResponseEntity<>(body, HttpStatus.UNPROCESSABLE_ENTITY);
 	}
+	
+	@ExceptionHandler(TavoloAncoraAttivoException.class)
+	public ResponseEntity<Object> handleTavoloAncoraAttivoException(TavoloAncoraAttivoException ex,
+			WebRequest request) {
+
+		Map<String, Object> body = new LinkedHashMap<>();
+		body.put("timestamp", LocalDateTime.now());
+		body.put("message", ex.getMessage());
+		body.put("status", HttpStatus.UNPROCESSABLE_ENTITY);
+
+		return new ResponseEntity<>(body, HttpStatus.UNPROCESSABLE_ENTITY);
+	}
+	
+	@ExceptionHandler(PermessoNegatoPerModificaAlTavoloException.class)
+	public ResponseEntity<Object> handleTavoloAncoraAttivoException(PermessoNegatoPerModificaAlTavoloException ex,
+			WebRequest request) {
+
+		Map<String, Object> body = new LinkedHashMap<>();
+		body.put("timestamp", LocalDateTime.now());
+		body.put("message", ex.getMessage());
+		body.put("status", HttpStatus.UNPROCESSABLE_ENTITY);
+
+		return new ResponseEntity<>(body, HttpStatus.UNPROCESSABLE_ENTITY);
+	}
 
 }

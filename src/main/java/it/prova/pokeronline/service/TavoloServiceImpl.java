@@ -11,6 +11,8 @@ import it.prova.pokeronline.model.Tavolo;
 import it.prova.pokeronline.model.Utente;
 import it.prova.pokeronline.repository.TavoloRepository;
 import it.prova.pokeronline.repository.UtenteRepository;
+import it.prova.pokeronline.web.api.exception.TavoloAncoraAttivoException;
+import net.bytebuddy.asm.Advice.Return;
 
 @Service
 public class TavoloServiceImpl implements TavoloService {
@@ -35,8 +37,7 @@ public class TavoloServiceImpl implements TavoloService {
 	@Override
 	@Transactional(readOnly = true)
 	public Tavolo caricaSingoloTavolo(Long id) {
-		// TODO Auto-generated method stub
-		return null;
+		return tavoloRepository.findByIdEager(id);
 	}
 
 	@Override
@@ -48,8 +49,9 @@ public class TavoloServiceImpl implements TavoloService {
 	@Override
 	@Transactional
 	public Tavolo aggiorna(Tavolo tavoloInstance) {
-		// TODO Auto-generated method stub
-		return null;
+		if(!tavoloInstance.getGiocatori().isEmpty()) 
+			throw new TavoloAncoraAttivoException("Ci Sono ancora dei giocatori impossibile aggiornare il tavolo");
+		return tavoloRepository.save(tavoloInstance);
 	}
 
 	@Override

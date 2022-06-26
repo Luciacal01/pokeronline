@@ -99,6 +99,23 @@ public class Utente {
 		this.cognome = cognome;
 		this.dateRegistrazione = dateRegistrazione;
 	}
+	
+	
+
+	public Utente(Long id, String username, String password, String nome, String cognome, Date dateRegistrazione,
+			StatoUtente stato, Integer esperienzaAccumulata, Integer creditoAccumulato, Set<Ruolo> ruoli) {
+		super();
+		this.id = id;
+		this.username = username;
+		this.password = password;
+		this.nome = nome;
+		this.cognome = cognome;
+		this.dateRegistrazione = dateRegistrazione;
+		this.stato = stato;
+		this.esperienzaAccumulata = esperienzaAccumulata;
+		this.creditoAccumulato = creditoAccumulato;
+		this.ruoli = ruoli;
+	}
 
 	public Utente(Long id) {
 		this.id=id;

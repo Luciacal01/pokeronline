@@ -132,6 +132,9 @@ public class TavoloDTO {
 	}
 	public Tavolo buildTavoloModel(boolean includeIdGiocatori) {
 		Tavolo result = new Tavolo(this.id, this.esperienzaMinima, cifraMinima, denominazione, dataCreazione);
+		Utente utenteCreazione= this.utenteCreazione.buildUtenteModel(true);//new Utente(this.utenteCreazione.getId(), this.utenteCreazione.getUsername(),this.utenteCreazione.getPassword(), this.utenteCreazione.getNome(), this.utenteCreazione.getCognome(), this.utenteCreazione.getDataRegistrazione(),this.utenteCreazione.getStato(), this.utenteCreazione.getEsperienzaAccumulata(),this.utenteCreazione.getCreditoAccumulato());
+
+		result.setUtenteCreazione(utenteCreazione);
 		if (includeIdGiocatori && giocatoriIds != null)
 			result.setGiocatori(Arrays.asList(giocatoriIds).stream().map(id-> new Utente(id)).collect(Collectors.toSet()));
 		

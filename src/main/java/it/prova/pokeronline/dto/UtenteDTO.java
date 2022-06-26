@@ -190,6 +190,7 @@ public class UtenteDTO {
 		return result;
 	}
 	
+		
 	public static UtenteDTO buildUtenteDTOFromModel(Utente utenteModel) {
 		UtenteDTO result = new UtenteDTO(utenteModel.getId(), utenteModel.getUsername(), utenteModel.getNome(),
 				utenteModel.getCognome(), utenteModel.getDateRegistrazione(),  utenteModel.getEsperienzaAccumulata(), utenteModel.getCreditoAccumulato(), utenteModel.getStato());
