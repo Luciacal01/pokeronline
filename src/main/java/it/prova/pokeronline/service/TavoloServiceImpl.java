@@ -104,4 +104,9 @@ public class TavoloServiceImpl implements TavoloService {
 		return tavoloRepository.findByIdAndUtenteCreazione(id, utenteInstance).orElse(null);
 	}
 
+	@Override
+	public List<Tavolo> findTavoloByGiocatoreContains(Utente utente) {
+		return tavoloRepository.findTavoloGiocatorePresente(utente);
+	}
+
 }

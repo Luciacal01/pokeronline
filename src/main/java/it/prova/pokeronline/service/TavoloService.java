@@ -34,4 +34,6 @@ public interface TavoloService {
 	
 	public List<Tavolo> findByExampleAdmin(Tavolo example);
 
+	public List<Tavolo> findTavoloByGiocatoreContains(Utente findByUsername);
+
 }
