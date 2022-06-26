@@ -57,4 +57,13 @@ public class PlayManagment {
 		tavoloService.abbandonaPartita(tavoloId, giocatore);
 	}
 	
+	@GetMapping("/ricerca")
+	public List<TavoloDTO> ricerca(){
+		List<Tavolo> TavoliConEsperienzaMinimaMinoreDiQuellaAccumulata=tavoloService.ricercaTavoli(
+				utenteService.findByUsername(SecurityContextHolder.getContext().getAuthentication().getName())
+				.getEsperienzaAccumulata());
+		return TavoloDTO.createTavoloDTOListFromModelList(TavoliConEsperienzaMinimaMinoreDiQuellaAccumulata);
+		
+	}
+	
 }

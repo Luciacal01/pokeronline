@@ -2,6 +2,7 @@ package it.prova.pokeronline.service;
 
 import java.util.List;
 
+import it.prova.pokeronline.dto.TavoloDTO;
 import it.prova.pokeronline.model.Tavolo;
 import it.prova.pokeronline.model.Utente;
 
@@ -37,5 +38,7 @@ public interface TavoloService {
 	public List<Tavolo> findTavoloByGiocatoreContains(Utente findByUsername);
 
 	public void abbandonaPartita(Long tavoloId, Utente giocatore);
+
+	public List<Tavolo> ricercaTavoli(Integer esperienzaAccumulata);
 
 }

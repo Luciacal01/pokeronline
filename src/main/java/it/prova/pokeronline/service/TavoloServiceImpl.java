@@ -129,4 +129,9 @@ public class TavoloServiceImpl implements TavoloService {
 		
 	}
 
+	@Override
+	public List<Tavolo> ricercaTavoli(Integer esperienzaAccumulata) {
+		return tavoloRepository.findAllByEsperienzaMinimaIsLessThanEqual(esperienzaAccumulata);
+	}
+
 }
