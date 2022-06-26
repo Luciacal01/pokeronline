@@ -63,7 +63,9 @@ public class TavoloServiceImpl implements TavoloService {
 	@Override
 	@Transactional
 	public void rimuovi(Tavolo tavoloInstance) {
-		// TODO Auto-generated method stub
+		if(!tavoloInstance.getGiocatori().isEmpty()) 
+			throw new TavoloAncoraAttivoException("Ci Sono ancora dei giocatori impossibile aggiornare il tavolo");
+		tavoloRepository.delete(tavoloInstance);
 
 	}
 

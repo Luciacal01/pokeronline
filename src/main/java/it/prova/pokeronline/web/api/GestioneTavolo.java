@@ -6,13 +6,16 @@ import javax.validation.Valid;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.security.core.context.SecurityContextHolder;
+import org.springframework.web.bind.annotation.DeleteMapping;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.PutMapping;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
+import org.springframework.web.bind.annotation.ResponseStatus;
 import org.springframework.web.bind.annotation.RestController;
+import org.springframework.http.HttpStatus;
 
 import it.prova.pokeronline.dto.TavoloDTO;
 import it.prova.pokeronline.dto.UtenteDTO;
@@ -88,6 +91,17 @@ public class GestioneTavolo {
 		tavoloInput.setId(id);
 		Tavolo tavoloAggiornato = tavoloServiceInstance.aggiorna(tavoloInput.buildTavoloModel(true));
 		return TavoloDTO.buildTavoloDTOFromModel(tavoloAggiornato);
+	}
+	
+	@DeleteMapping("/{id}")
+	@ResponseStatus(HttpStatus.OK)
+	public void delete(@PathVariable(required = true) Long id) {
+		Tavolo tavoloInstance = tavoloServiceInstance.caricaSingoloTavoloConUtenti(id);
+
+		if (tavoloInstance == null)
+			throw new TavoloNotFoundException("Tavolo not found con id: " + id);
+
+		tavoloServiceInstance.rimuovi(tavoloInstance);
 	}
 	
 	
